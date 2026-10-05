@@ -1,0 +1,86 @@
+{
+    "settings": {
+        "title": "My Blog",
+        "tagline": "Test",
+        "admin_path": "manage-this",
+        "registration_open": true,
+        "comments_enabled": true,
+        "comments_moderated": true,
+        "comments_visibility": "members"
+    },
+    "users": [
+        {
+            "id": "59bf4983284c7c87",
+            "name": "Site Admin",
+            "email": "admin@example.test",
+            "password": "$2y$10$0UywFvakToeIGiB57j3gPecyeqkrHo/fnCjCcaqFsl0SP1IPdjVlK",
+            "role": "admin",
+            "created_at": "2026-10-05T11:52:16+00:00"
+        }
+    ],
+    "posts": {
+        "welcome": {
+            "created_at": "2026-10-05T11:52:16+00:00",
+            "id": "3090378ce06d8b42",
+            "slug": "welcome",
+            "title": "Welcome",
+            "body": "An introduction",
+            "privacy": "public",
+            "status": "published",
+            "updated_at": "2026-10-05T11:52:16+00:00"
+        },
+        "members-area": {
+            "created_at": "2026-10-05T11:52:48+00:00",
+            "id": "8d6461fb51c50ae0",
+            "slug": "members-area",
+            "title": "Members area",
+            "body": "secret-article-body",
+            "privacy": "members",
+            "status": "published",
+            "updated_at": "2026-10-05T11:52:48+00:00"
+        }
+    },
+    "pages": {
+        "contact-us": {
+            "created_at": "2026-10-05T11:52:16+00:00",
+            "id": "6ba63a823b917eb8",
+            "slug": "contact-us",
+            "title": "Contact us",
+            "body": "Write to us",
+            "privacy": "public",
+            "status": "published",
+            "updated_at": "2026-10-05T11:52:16+00:00",
+            "form_id": "f0912827ee5c81be"
+        }
+    },
+    "comments": [],
+    "polls": [
+        {
+            "id": "81ff1ed6300d649d",
+            "title": "Choose one",
+            "post_slug": "welcome",
+            "options": [
+                "First",
+                "Second"
+            ],
+            "votes": [
+                0,
+                0
+            ],
+            "voters": [],
+            "created_at": "2026-10-05T11:52:16+00:00"
+        }
+    ],
+    "forms": [
+        {
+            "id": "f0912827ee5c81be",
+            "title": "Contact",
+            "fields": [
+                "Name",
+                "Message"
+            ],
+            "created_at": "2026-10-05T11:52:16+00:00"
+        }
+    ],
+    "messages": []
+}

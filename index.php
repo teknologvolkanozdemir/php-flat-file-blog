@@ -547,11 +547,13 @@ function handle_form_action(array &$store, string $path): void
             redirect('/');
         }
         $values = [];
-        foreach ($form['fields'] as $field) {
-            $value = trim((string) ($_POST['field_' . $field] ?? ''));
-            if ($value !== '') {
-                $values[$field] = text_limit($value, 5000);
+        foreach ($form['fields'] as $index => $field) {
+            $value = trim((string) ($_POST['field_' . $index] ?? ''));
+            if ($value === '') {
+                flash('Please complete every form field.', 'error');
+                redirect('/page/' . rawurlencode($pageSlug));
             }
+            $values[$field] = text_limit($value, 5000);
         }
         if (!$values) {
             flash('Please fill in at least one field.', 'error');
@@ -778,7 +780,7 @@ if (preg_match('#^/(post|page)/([^/]+)$#', $path, $matches)) {
         foreach ($store['forms'] as $form) {
             if ($form['id'] !== $item['form_id']) continue;
             echo '<section class="panel"><h2>' . e($form['title']) . '</h2><form method="post" action="/forms/submit" class="stack">' . csrf_field() . '<input type="hidden" name="form_id" value="' . e($form['id']) . '"><input type="hidden" name="page_slug" value="' . e($slug) . '">';
-            foreach ($form['fields'] as $field) echo '<label>' . e($field) . '<textarea name="field_' . e($field) . '" rows="3" required></textarea></label>';
+            foreach ($form['fields'] as $index => $field) echo '<label>' . e($field) . '<textarea name="field_' . e($index) . '" rows="3" required></textarea></label>';
             echo '<button class="button" type="submit">Send message</button></form></section>';
         }
     }
