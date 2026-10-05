@@ -767,12 +767,12 @@ if (preg_match('#^/(post|page)/([^/]+)$#', $path, $matches)) {
         if ($store['settings']['comments_enabled']) {
             $commentsAllowed = $store['settings']['comments_visibility'] !== 'members' || current_user();
             echo '<section id="comments" class="comments"><h2>Comments</h2>';
-            foreach ($store['comments'] as $comment) {
-                if ($comment['post_slug'] === $slug && !empty($comment['approved']) && empty($comment['deleted'])) {
-                    echo '<article class="comment"><strong>' . e($comment['name']) . '</strong><span class="muted">' . e(substr($comment['created_at'], 0, 10)) . '</span><p>' . nl2br(e($comment['body'])) . '</p></article>';
-                }
-            }
             if ($commentsAllowed) {
+                foreach ($store['comments'] as $comment) {
+                    if ($comment['post_slug'] === $slug && !empty($comment['approved']) && empty($comment['deleted'])) {
+                        echo '<article class="comment"><strong>' . e($comment['name']) . '</strong><span class="muted">' . e(substr($comment['created_at'], 0, 10)) . '</span><p>' . nl2br(e($comment['body'])) . '</p></article>';
+                    }
+                }
                 echo '<form method="post" action="/comments/create" class="panel stack">' . csrf_field() . '<input type="hidden" name="post_slug" value="' . e($slug) . '">';
                 if (!current_user()) echo form_input('Your name', 'name');
                 echo '<label>Your comment<textarea name="body" rows="4" required></textarea></label><button class="button" type="submit">Send comment</button></form>';
