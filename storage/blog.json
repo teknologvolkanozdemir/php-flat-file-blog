@@ -5,58 +5,87 @@
         "admin_path": "manage-this",
         "registration_open": true,
         "comments_enabled": true,
-        "comments_moderated": true,
+        "comments_moderated": false,
         "comments_visibility": "members"
     },
     "users": [
         {
-            "id": "59bf4983284c7c87",
+            "id": "d2f93984b1acb3fc",
             "name": "Site Admin",
             "email": "admin@example.test",
-            "password": "$2y$10$0UywFvakToeIGiB57j3gPecyeqkrHo/fnCjCcaqFsl0SP1IPdjVlK",
+            "password": "$2y$10$X/miyTlrAMxli9tMndSeHuEphqxM1o8UMti4T8JW1EnKwMjipqQry",
             "role": "admin",
-            "created_at": "2026-10-05T11:52:16+00:00"
+            "created_at": "2026-10-05T11:54:09+00:00"
+        },
+        {
+            "id": "defb04768443807a",
+            "name": "Member",
+            "email": "member@example.test",
+            "password": "$2y$10$v5l648WPDUvJPqRMqI54Yer34cI9NaepMexMi4RzxNZ7dW/S0m0l6",
+            "role": "member",
+            "created_at": "2026-10-05T11:54:09+00:00"
         }
     ],
     "posts": {
         "welcome": {
-            "created_at": "2026-10-05T11:52:16+00:00",
-            "id": "3090378ce06d8b42",
+            "created_at": "2026-10-05T11:54:09+00:00",
+            "id": "e6c29784cd8a03d5",
             "slug": "welcome",
             "title": "Welcome",
-            "body": "An introduction",
+            "body": "intro text",
             "privacy": "public",
             "status": "published",
-            "updated_at": "2026-10-05T11:52:16+00:00"
+            "updated_at": "2026-10-05T11:54:09+00:00"
         },
         "members-area": {
-            "created_at": "2026-10-05T11:52:48+00:00",
-            "id": "8d6461fb51c50ae0",
+            "created_at": "2026-10-05T11:54:09+00:00",
+            "id": "c478daf44d91c1f9",
             "slug": "members-area",
             "title": "Members area",
             "body": "secret-article-body",
             "privacy": "members",
             "status": "published",
-            "updated_at": "2026-10-05T11:52:48+00:00"
+            "updated_at": "2026-10-05T11:54:09+00:00"
         }
     },
     "pages": {
-        "contact-us": {
-            "created_at": "2026-10-05T11:52:16+00:00",
-            "id": "6ba63a823b917eb8",
-            "slug": "contact-us",
-            "title": "Contact us",
-            "body": "Write to us",
+        "contact-page": {
+            "created_at": "2026-10-05T11:54:09+00:00",
+            "id": "9d349416fc3a41f3",
+            "slug": "contact-page",
+            "title": "Contact page",
+            "body": "Get in touch",
             "privacy": "public",
             "status": "published",
-            "updated_at": "2026-10-05T11:52:16+00:00",
-            "form_id": "f0912827ee5c81be"
+            "updated_at": "2026-10-05T11:54:09+00:00",
+            "form_id": "33e3b277db540b0a"
         }
     },
-    "comments": [],
+    "comments": [
+        {
+            "id": "6089b90d8a80a80b",
+            "post_slug": "welcome",
+            "name": "Member",
+            "user_id": "defb04768443807a",
+            "body": "member-visible-comment",
+            "approved": false,
+            "deleted": false,
+            "created_at": "2026-10-05T11:54:09+00:00"
+        },
+        {
+            "id": "65ad0b922a22426b",
+            "post_slug": "welcome",
+            "name": "Member",
+            "user_id": "defb04768443807a",
+            "body": "approved-comment",
+            "approved": true,
+            "deleted": false,
+            "created_at": "2026-10-05T11:54:24+00:00"
+        }
+    ],
     "polls": [
         {
-            "id": "81ff1ed6300d649d",
+            "id": "fa36075278635e0a",
             "title": "Choose one",
             "post_slug": "welcome",
             "options": [
@@ -68,19 +97,34 @@
                 0
             ],
             "voters": [],
-            "created_at": "2026-10-05T11:52:16+00:00"
+            "created_at": "2026-10-05T11:54:09+00:00"
         }
     ],
     "forms": [
         {
-            "id": "f0912827ee5c81be",
-            "title": "Contact",
+            "id": "33e3b277db540b0a",
+            "title": "Contact form",
             "fields": [
-                "Name",
-                "Message"
+                "Your name",
+                "E-mail address",
+                "Your message"
             ],
-            "created_at": "2026-10-05T11:52:16+00:00"
+            "created_at": "2026-10-05T11:54:09+00:00"
         }
     ],
-    "messages": []
+    "messages": [
+        {
+            "id": "d65f4dfd83348faa",
+            "form_title": "Contact form",
+            "page_slug": "contact-page",
+            "values": {
+                "Your name": "Test User",
+                "E-mail address": "user@example.test",
+                "Your message": "hello inbox"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-05T11:54:09+00:00"
+        }
+    ]
 }

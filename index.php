@@ -206,6 +206,11 @@ function url(string $path = ''): string
     return '/' . ltrim($path, '/');
 }
 
+function admin_redirect(array $store, string $path): never
+{
+    redirect('/' . trim((string) $store['settings']['admin_path'], '/') . '/' . ltrim($path, '/'));
+}
+
 function render(string $title, string $content, array $store): void
 {
     $flash = $_SESSION['flash'] ?? null;
@@ -352,7 +357,7 @@ function handle_form_action(array &$store, string $path): void
             $body = trim((string) ($_POST['body'] ?? ''));
             if ($title === '' || $body === '') {
                 flash('Title and content are required.', 'error');
-                redirect('/admin/' . ($kind === 'posts' ? 'new-post' : 'new-page'));
+                admin_redirect($store, $kind === 'posts' ? 'new-post' : 'new-page');
             }
             $oldSlug = trim((string) ($_POST['slug'] ?? ''));
             if ($oldSlug !== '' && isset($store[$kind][$oldSlug])) {
@@ -375,7 +380,7 @@ function handle_form_action(array &$store, string $path): void
             }
             $store[$kind][$slug] = $item;
             flash(ucfirst(substr($kind, 0, -1)) . ' saved.');
-            redirect('/admin/' . $kind);
+            admin_redirect($store, $kind);
         }
 
         if (in_array($action, ['delete-post', 'delete-page'], true)) {
@@ -383,7 +388,7 @@ function handle_form_action(array &$store, string $path): void
             $slug = (string) ($_POST['slug'] ?? '');
             unset($store[$kind][$slug]);
             flash(ucfirst(substr($kind, 0, -1)) . ' deleted.');
-            redirect('/admin/' . $kind);
+            admin_redirect($store, $kind);
         }
 
         if ($action === 'create-poll') {
@@ -392,19 +397,19 @@ function handle_form_action(array &$store, string $path): void
             $options = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) ($_POST['options'] ?? '')) ?: [])));
             if ($title === '' || !isset($store['posts'][$postSlug]) || count($options) < 2 || count($options) > 20) {
                 flash('Choose a post and provide a title and 2–20 options.', 'error');
-                redirect('/admin/polls');
+                admin_redirect($store, 'polls');
             }
             $store['polls'][] = ['id' => bin2hex(random_bytes(8)), 'title' => $title, 'post_slug' => $postSlug,
                 'options' => $options, 'votes' => array_fill(0, count($options), 0), 'voters' => [], 'created_at' => date(DATE_ATOM)];
             flash('Poll created and attached to the post.');
-            redirect('/admin/polls');
+            admin_redirect($store, 'polls');
         }
 
         if ($action === 'delete-poll') {
             $id = (string) ($_POST['id'] ?? '');
             $store['polls'] = array_values(array_filter($store['polls'], static fn(array $poll): bool => $poll['id'] !== $id));
             flash('Poll deleted.');
-            redirect('/admin/polls');
+            admin_redirect($store, 'polls');
         }
 
         if ($action === 'create-form') {
@@ -412,11 +417,11 @@ function handle_form_action(array &$store, string $path): void
             $fields = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) ($_POST['fields'] ?? '')) ?: [])));
             if ($title === '' || count($fields) < 1 || count($fields) > 20) {
                 flash('Provide a form title and 1–20 field names.', 'error');
-                redirect('/admin/forms');
+                admin_redirect($store, 'forms');
             }
             $store['forms'][] = ['id' => bin2hex(random_bytes(8)), 'title' => $title, 'fields' => $fields, 'created_at' => date(DATE_ATOM)];
             flash('Contact form created. You can attach it while editing a page.');
-            redirect('/admin/forms');
+            admin_redirect($store, 'forms');
         }
 
         if ($action === 'delete-form') {
@@ -429,7 +434,7 @@ function handle_form_action(array &$store, string $path): void
             }
             unset($page);
             flash('Form deleted.');
-            redirect('/admin/forms');
+            admin_redirect($store, 'forms');
         }
 
         if ($action === 'comment-action') {
@@ -447,7 +452,7 @@ function handle_form_action(array &$store, string $path): void
             }
             unset($comment);
             flash('Comment updated.');
-            redirect('/admin/comments');
+            admin_redirect($store, 'comments');
         }
 
         if ($action === 'message-action') {
@@ -463,7 +468,7 @@ function handle_form_action(array &$store, string $path): void
             }
             unset($message);
             flash('Inbox updated.');
-            redirect('/admin/inbox');
+            admin_redirect($store, 'inbox');
         }
 
         if ($action === 'save-settings') {
@@ -471,7 +476,7 @@ function handle_form_action(array &$store, string $path): void
             $adminPath = preg_replace('/[^a-zA-Z0-9_-]/', '', $adminPath) ?? '';
             if ($adminPath === '' || in_array($adminPath, ['login', 'logout', 'register', 'post', 'page', 'setup', 'assets', 'comments', 'poll', 'forms', 'storage'], true)) {
                 flash('Choose an available admin URL path.', 'error');
-                redirect('/admin/settings');
+                admin_redirect($store, 'settings');
             }
             $store['settings'] = array_merge($store['settings'], [
                 'title' => trim((string) ($_POST['title'] ?? '')) ?: 'My Flat-file Blog',
